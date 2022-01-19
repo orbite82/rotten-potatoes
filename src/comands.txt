@@ -1,2 +1,56 @@
 cd src/
+docker login
 docker build -t orbite82/rotten-potatoes:v1 .
+docker image ls
+REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
+orbite82/rotten-potatoes         v1                a51305ff06bf   48 seconds ago   164MB
+
+docker push orbite82/rotten-potatoes:v1
+docker tag orbite82/rotten-potatoes:v1 orbite82/rotten-potatoes:latest
+
+docker image ls
+REPOSITORY                       TAG               IMAGE ID       CREATED         SIZE
+orbite82/rotten-potatoes         latest            a51305ff06bf   3 minutes ago   164MB
+orbite82/rotten-potatoes         v1                a51305ff06bf   3 minutes ago   164MB
+
+docker push orbite82/rotten-potatoes:latest
+
+k3d cluster create  meucluster --agents 3 --servers 3 -p "8080:30000@loadbalancer"
+docker container ls
+kubectl get nodes
+
+cd k8s
+
+kubectl apply -f deployment.yaml
+deployment.apps/mongodb created
+service/mongodb created
+
+kubectl get pods
+NAME                      READY   STATUS              RESTARTS   AGE
+mongodb-9f45bf784-n5t97   0/1     ContainerCreating   0          33s
+
+kubectl get services
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+kubernetes   ClusterIP   10.43.0.1       <none>        443/TCP     46m
+mongodb      ClusterIP   10.43.135.118   <none>        27017/TCP   49s
+
+kubectl apply -f deployment.yaml 
+deployment.apps/mongodb unchanged
+service/mongodb unchanged
+deployment.apps/web created
+service/web created
+
+kubectl get pods
+NAME                      READY   STATUS    RESTARTS   AGE
+mongodb-9f45bf784-kz97w   1/1     Running   0          5m43s
+web-6d4976c748-d84ll      1/1     Running   0          3m11s
+
+kubectl get services
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.43.0.1       <none>        443/TCP        104m
+mongodb      ClusterIP   10.43.135.118   <none>        27017/TCP      58m
+web          NodePort    10.43.27.215    <none>        80:30000/TCP   3m44s
+
+Teste da Aplicação:
+
+http://localhost:8080
