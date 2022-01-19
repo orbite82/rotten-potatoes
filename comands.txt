@@ -54,3 +54,47 @@ web          NodePort    10.43.27.215    <none>        80:30000/TCP   3m44s
 Teste da Aplicação:
 
 http://localhost:8080
+
+cd src/
+
+versão 2.0
+
+docker build -t orbite82/rotten-potatoes:v2 .
+docker tag orbite82/rotten-potatoes:v2 orbite82/rotten-potatoes:latest
+
+docker image ls
+REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
+orbite82/rotten-potatoes         latest            a5dfc49b4000   58 seconds ago   164MB
+orbite82/rotten-potatoes         v2                a5dfc49b4000   58 seconds ago   164MB
+orbite82/rotten-potatoes         v1                a51305ff06bf   3 hours ago      164MB
+orbite82/conversao-temperatura   v1                4aa93d33826f   45 hours ago     995MB
+node                             latest            14777a723ec4   8 days ago       993MB
+python                           3.8-slim-buster   5cc8cb0c433a   4 weeks ago      114MB
+rancher/k3d-tools                5.2.2             ad4072a16136   4 weeks ago      18.7MB
+rancher/k3d-proxy                5.2.2             d0554070bc8c   4 weeks ago      42.4MB
+rancher/k3s                      v1.21.7-k3s1      4cbf38ec7da6   7 weeks ago      174MB
+hello-world                      latest            feb5d9fea6a5   3 months ago     13.3kB
+node                             14.17.5           256d6360f157   5 months ago     944MB
+
+docker push orbite82/rotten-potatoes:v2
+docker push orbite82/rotten-potatoes:latest
+
+https://hub.docker.com/repository/docker/orbite82/rotten-potatoes
+
+cd ..
+cd k8s/
+
+kubectl apply -f deployment.yaml
+deployment.apps/mongodb unchanged
+service/mongodb unchanged
+deployment.apps/web configured
+service/web unchanged
+
+teste : http://localhost:8080 =
+
+ROTTEN POTATOES
+Review de Vídeos - 2.0
+
+
+
+
