@@ -25,6 +25,6 @@ jobs:
           context:  ./scr
           file: ./src/Dockerfile
           push: true
-          tags: 
+          tags: |
             orbite82/rotten-potatoes:latest
-            orbite82/rotten-potatoes:${{ github.run_number  }}
+            orbite82/rotten-potatoes:${{ github.run_number }}
