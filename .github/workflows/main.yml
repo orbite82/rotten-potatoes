@@ -12,3 +12,9 @@ jobs:
     
     steps:      
       - uses: actions/checkout@v2
+
+      - name: Docker Login
+        uses: docker/login-action@v1.12.0
+        with:        
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PWD }}
